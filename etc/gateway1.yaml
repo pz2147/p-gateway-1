@@ -1,3 +1,7 @@
 Name: Gateway1
 Host: 0.0.0.0
 Port: 8889
+
+ForwardConf:
+  Api1:
+    Host: http://127.0.0.1:8888

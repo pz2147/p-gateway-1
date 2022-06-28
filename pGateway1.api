@@ -8,6 +8,9 @@ info(
 	version: "V1.0.0"
 )
 
+type EmptyReq {}
+type EmptyResp {}
+
 type PingPeq {}
 
 type PingRes {
@@ -15,12 +18,18 @@ type PingRes {
 }
 
 @server(
-	group: test
+	group: user
 )
 service Gateway1 {
-	@doc(
-		summary: "测试"
-	)
-	@handler testApi
-	post /test (PingPeq) returns (PingRes)
+	@doc "user登录"
+	@handler userLogin
+	post /user/login (EmptyReq) returns (EmptyResp)
+	
+	@doc "user登出"
+	@handler userLogout
+	post /user/logout (EmptyReq) returns (EmptyResp)
+	
+	@doc "user登录"
+	@handler userInfo
+	get /user/:id (EmptyReq) returns (EmptyResp)
 }

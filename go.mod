@@ -3,6 +3,7 @@ module github.com/pz2147/p-gateway-1
 go 1.16
 
 require (
+	github.com/imroc/req v0.3.2
 	github.com/openzipkin/zipkin-go v0.4.0 // indirect
 	github.com/tal-tech/go-zero v1.2.5
 	go.opentelemetry.io/otel v1.4.1 // indirect

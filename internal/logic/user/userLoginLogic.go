@@ -1,4 +1,4 @@
-package test
+package user
 
 import (
 	"context"
@@ -9,21 +9,21 @@ import (
 	"github.com/tal-tech/go-zero/core/logx"
 )
 
-type TestApiLogic struct {
+type UserLoginLogic struct {
 	logx.Logger
 	ctx    context.Context
 	svcCtx *svc.ServiceContext
 }
 
-func NewTestApiLogic(ctx context.Context, svcCtx *svc.ServiceContext) TestApiLogic {
-	return TestApiLogic{
+func NewUserLoginLogic(ctx context.Context, svcCtx *svc.ServiceContext) UserLoginLogic {
+	return UserLoginLogic{
 		Logger: logx.WithContext(ctx),
 		ctx:    ctx,
 		svcCtx: svcCtx,
 	}
 }
 
-func (l *TestApiLogic) TestApi(req types.PingPeq) (resp *types.PingRes, err error) {
+func (l *UserLoginLogic) UserLogin(req types.EmptyReq) (resp *types.EmptyResp, err error) {
 	// todo: add your logic here and delete this line
 
 	return
