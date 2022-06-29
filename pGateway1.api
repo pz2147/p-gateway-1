@@ -19,12 +19,9 @@ type PingRes {
 
 @server(
 	group: user
+	jwt: Auth
 )
 service Gateway1 {
-	@doc "user登录"
-	@handler userLogin
-	post /user/login (EmptyReq) returns (EmptyResp)
-	
 	@doc "user登出"
 	@handler userLogout
 	post /user/logout (EmptyReq) returns (EmptyResp)
@@ -32,4 +29,13 @@ service Gateway1 {
 	@doc "user登录"
 	@handler userInfo
 	get /user/:id (EmptyReq) returns (EmptyResp)
+}
+
+@server(
+	group: user
+)
+service Gateway1 {
+	@doc "user登录"
+	@handler userLogin
+	post /user/login (EmptyReq) returns (EmptyResp)
 }

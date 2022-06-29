@@ -7,17 +7,12 @@ import (
 	user "github.com/pz2147/p-gateway-1/internal/handler/user"
 	"github.com/pz2147/p-gateway-1/internal/svc"
 
-	"github.com/tal-tech/go-zero/rest"
+	"github.com/zeromicro/go-zero/rest"
 )
 
 func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 	server.AddRoutes(
 		[]rest.Route{
-			{
-				Method:  http.MethodPost,
-				Path:    "/user/login",
-				Handler: user.UserLoginHandler(serverCtx),
-			},
 			{
 				Method:  http.MethodPost,
 				Path:    "/user/logout",
@@ -27,6 +22,17 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Method:  http.MethodGet,
 				Path:    "/user/:id",
 				Handler: user.UserInfoHandler(serverCtx),
+			},
+		},
+		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),
+	)
+
+	server.AddRoutes(
+		[]rest.Route{
+			{
+				Method:  http.MethodPost,
+				Path:    "/user/login",
+				Handler: user.UserLoginHandler(serverCtx),
 			},
 		},
 	)

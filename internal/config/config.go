@@ -1,10 +1,11 @@
 package config
 
-import "github.com/tal-tech/go-zero/rest"
+import "github.com/zeromicro/go-zero/rest"
 
 type Config struct {
 	rest.RestConf
 	ForwardConf ForwardConf
+	Auth JwtAuth
 }
 
 type ForwardConf struct {
@@ -13,4 +14,9 @@ type ForwardConf struct {
 
 type ForwardApiModel struct {
 	Host string
+}
+
+type JwtAuth struct {
+	AccessSecret string
+	AccessExpire int64
 }
