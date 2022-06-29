@@ -1,14 +1,17 @@
 package handler
 
 import (
+	"fmt"
+	"github.com/imroc/req"
+	gzTrace "github.com/tal-tech/go-zero/core/trace"
+	"go.opentelemetry.io/otel/trace"
+
 	"github.com/tal-tech/go-zero/rest/httpx"
 	"net/http"
 
 	"github.com/pz2147/p-gateway-1/internal/logic/user"
 	"github.com/pz2147/p-gateway-1/internal/svc"
 	"github.com/pz2147/p-gateway-1/internal/types"
-
-	"github.com/imroc/req"
 )
 
 func UserLoginHandler(ctx *svc.ServiceContext) http.HandlerFunc {
@@ -19,6 +22,24 @@ func UserLoginHandler(ctx *svc.ServiceContext) http.HandlerFunc {
 		//	httpx.Error(w, err)
 		//	return
 		//}
+
+		gCtx := r.Context()
+		spanCtx := trace.SpanContextFromContext(gCtx)
+		if spanCtx.HasSpanID() {
+			fmt.Printf("traceId %s", spanCtx.TraceID())
+
+			s := spanCtx.TraceFlags().String()
+			fmt.Printf("%s",s)
+
+			traceId := spanCtx.TraceID().String()
+			spanId := spanCtx.SpanID().String()
+			flags := spanCtx.TraceFlags().String()
+
+			f := fmt.Sprintf("%s-%s-%s-%s",flags, traceId, spanId, flags)
+
+			r.Header.Set(gzTrace.TraceIdKey, traceId)
+			r.Header.Set("traceparent", f)
+		}
 
 		url := ctx.Config.ForwardConf.Api1.Host + r.RequestURI
 
@@ -31,15 +52,19 @@ func UserLoginHandler(ctx *svc.ServiceContext) http.HandlerFunc {
 				var respMap map[string]interface{}
 				respErr := gResp.ToJSON(&respMap)
 				if respErr != nil {
-					httpx.Error(w, err)
+					httpx.Error(w, respErr)
 				} else {
 					httpx.OkJson(w, respMap)
 				}
 			}
 		}
 
+
+
+
+
 		//l := user.NewUserLoginLogic(r.Context(), ctx)
-		//resp, err := l.UserLogin(req)
+		//resp, err := l.UserLogin(types.EmptyReq{})
 		//if err != nil {
 		//	httpx.Error(w, err)
 		//} else {

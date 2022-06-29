@@ -5,3 +5,9 @@ Port: 8889
 ForwardConf:
   Api1:
     Host: http://127.0.0.1:8888
+
+Telemetry:
+  Name:
+  Endpoint: http://127.0.0.1:14268/api/traces
+  Sampler: 1.0
+  Batcher: jaeger

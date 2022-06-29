@@ -26,5 +26,7 @@ func NewUserLoginLogic(ctx context.Context, svcCtx *svc.ServiceContext) UserLogi
 func (l *UserLoginLogic) UserLogin(req types.EmptyReq) (resp *types.EmptyResp, err error) {
 	// todo: add your logic here and delete this line
 
-	return
+	l.Logger.Infof("shshshhs");
+
+	return nil, nil
 }
